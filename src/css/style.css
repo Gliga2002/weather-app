@@ -6,7 +6,6 @@ header {
 
 .header__left {
   display: flex;
-  /* align-items: stretch; */
   gap: 8%;
   width: 75%;
 }
@@ -20,7 +19,6 @@ header {
 .search__form {
   width: 75%;
   display: flex;
-  /* align-items: stretch; */
 }
 
 .search__input {
@@ -50,12 +48,10 @@ header {
   border-bottom-left-radius: 0 !important;
 }
 
-
 .header__right {
   width: 25%;
   display: flex;
   justify-content: flex-end;
-  /* align-items: stretch; */
 }
 
 .btn--light {
@@ -72,7 +68,6 @@ header {
 .section__hero {
   background-color: var(--background-color--1);
   padding: 3rem 0;
-  /* height: 91vh; */
 }
 
 .curr__weather {
@@ -112,7 +107,9 @@ header {
   padding-right: 2.4rem;
 }
 
-.curr__weather--2 p {
+.hour,
+.percentage,
+.temperature {
   font-size: 1.4rem;
 }
 
@@ -128,7 +125,6 @@ header {
   left: 29%;
 }
 
-
 .info__weather {
   padding: 5.4rem 0 7rem 0;
   background-color: var(--background-color--4);
@@ -137,7 +133,7 @@ header {
 .info__weather__container {}
 
 .info__weather__cell {
-  color: white;
+  color: var(--text-color--1);
   padding: 1.2rem 2rem 1.2rem 0.8rem;
 }
 
@@ -157,15 +153,11 @@ header {
   padding: 0.5rem 0 3rem 0;
 }
 
-.forecast__container {
-  /* background-color: green; */
-}
+.forecast__container {}
 
 .forecast__container__row {
-  /* background-color: blue; */
-  color: white;
-  border-bottom: 1px solid #dee2e6;
-  justify-content: space-between;
+  color: var(--text-color--1);
+  border-bottom: 1px solid var(--text-color--7);
   align-items: center;
 }
 
@@ -176,6 +168,14 @@ header {
   font-size: 1.28rem;
   color: var(--text-color--2);
   text-transform: uppercase;
+}
+
+.forecast__day--value,
+.forecast__raining__chance--value,
+.forecast__humidity--value,
+.forecast__temperature--value {
+  font-size: 1.6rem;
+  color: var(--background-color--4);
 }
 
 .forecast__raining__chance,
@@ -193,12 +193,4 @@ header {
 
 .forecast__img {
   text-align: center;
-}
-
-.forecast__day--value,
-.forecast__raining__chance--value,
-.forecast__humidity--value,
-.forecast__temperature--value {
-  font-size: 1.6rem;
-  color: var(--background-color--4);
 }
