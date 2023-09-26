@@ -1,3 +1,2 @@
 import './css/style.css';
-
-console.log('Heyy');
+import './css/general.css';
