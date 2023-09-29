@@ -12,16 +12,16 @@
   <header>
     <div class="header__left">
       <img class='logo__img' src="./assets/logo_white_cropped.png" alt="openweather logo" />
-      <div class="search__form">
-        <input class="search__input" type="text" placeholder="Enter text">
-        <button class="btn btn--search" type="button">Search</button>
-      </div>
+      <form class="search__form" novalidate>
+        <input class="search__input" name="search" type="text" placeholder="Enter text" spellcheck="false">
+        <button class="btn btn--search" type="submit">Search</button>
+      </form>
     </div>
     <div class="header__right">
       <button class="btn btn--light" type="button">
-        <span>°C</span>
+        <span class="celcious active">°C</span>
         /
-        <span>°F</span>
+        <span class="farenheit">°F</span>
       </button>
     </div>
   </header>

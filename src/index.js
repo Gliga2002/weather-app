@@ -6,27 +6,61 @@ import {
   renderCurrWeatherHourData,
   renderHighestLowestInfo,
   renderWeatherInfo,
-  renderForecastContainer
+  renderForecastContainer,
+  successInput,
+  unsuccessInput
 } from './dom';
+
+import {
+  createErrObject
+} from './helper';
 
 
 const API_KEY = '138e826f3348429f98a112345232509';
 const FORECAST_DAYS = '3';
+let filtriraniPodaci = '';
 
+export function getProccessedForecastData() {
+  return filtriraniPodaci;
+}
+
+window.addEventListener('load', (e) => {
+  getForecastData('london');
+})
+
+const searchForm = document.querySelector('.search__form');
+searchForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const inputValue = this.search.value;
+  getForecastData(inputValue);
+
+})
 
 async function getForecastData(city) {
-  const forecastResponse = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=${FORECAST_DAYS}`);
-  const forecastData = await forecastResponse.json();
-  console.log(forecastData);
-  const proccessedForecastData = processForecastData(forecastData);
-  console.log(proccessedForecastData);
-  renderCurrWeatherSummaryData(proccessedForecastData);
-  renderCurrWeatherHourData(proccessedForecastData);
-  renderHighestLowestInfo(proccessedForecastData);
-  renderWeatherInfo(proccessedForecastData);
-  renderForecastContainer(proccessedForecastData)
+  try {
+    const forecastResponse = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=${FORECAST_DAYS}`);
+    console.log(forecastResponse)
+    if (!forecastResponse.ok) {
+      createErrObject('City not found, please enter valid city', forecastResponse.status)
+    }
+    successInput();
+    const forecastData = await forecastResponse.json();
+    console.log(forecastData);
+    const proccessedForecastData = processForecastData(forecastData);
+    filtriraniPodaci = proccessedForecastData;
+    console.log(proccessedForecastData);
+    renderCurrWeatherSummaryData(proccessedForecastData);
+    renderCurrWeatherHourData(proccessedForecastData);
+    renderHighestLowestInfo(proccessedForecastData);
+    renderWeatherInfo(proccessedForecastData);
+    renderForecastContainer(proccessedForecastData)
+  } catch (err) {
+    console.log(err);
+    unsuccessInput(err);
+
+  }
 }
-getForecastData('krusevac');
+
 
 function processForecastData(forecastData) {
   const { current, forecast, location } = forecastData;
@@ -42,9 +76,9 @@ function getForecastLocationData(location) {
 }
 
 function getForecastCurrentData(current) {
-  const { temp_c: tempC, temp_f: tempF, condition, uv, feelslike_c: feelsLikeC, feelslike_f: feelslikeF } = current;
+  const { temp_c: tempC, temp_f: tempF, condition, uv, feelslike_c: feelsLikeC, feelslike_f: feelsLikeF } = current;
   const { humidity, wind_kph: windKph, wind_dir: windDir, vis_km: visKm, pressure_mb: pressureMb } = current;
-  return { tempC, tempF, condition, uv, feelsLikeC, feelslikeF, humidity, windKph, windDir, visKm, pressureMb };
+  return { tempC, tempF, condition, uv, feelsLikeC, feelsLikeF, humidity, windKph, windDir, visKm, pressureMb };
 }
 
 function getForecastForecastData(forecast) {

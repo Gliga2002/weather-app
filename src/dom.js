@@ -1,6 +1,7 @@
 import { findCurrForecastObj, findRemainingForecastObj, getDayInWeek } from "./helper";
+import { getProccessedForecastData } from './index';
 
-export function renderCurrWeatherSummaryData(forecastData) {
+export function renderCurrWeatherSummaryData(forecastData, celcius = true) {
   const locationNameEl = document.querySelector('.location__name');
   const summaryEl = document.querySelector('.summary');
   const currTemperatureEl = document.querySelector('.curr__temperature');
@@ -12,13 +13,13 @@ export function renderCurrWeatherSummaryData(forecastData) {
 
   locationNameEl.textContent = locationObj.name;
   summaryEl.textContent = currentObj.condition.text;
-  currTemperatureEl.textContent = `${currentObj.tempC}°`;
-
-  highestSpanEl.textContent = currForecastObj.day.maxtempC;
-  lowestSpanEl.textContent = currForecastObj.day.mintempC;
+  currTemperatureEl.textContent = celcius ? `${currentObj.tempC}°` : `${currentObj.tempF}°`;
+  console.log(currForecastObj);
+  highestSpanEl.textContent = celcius ? `${currForecastObj.day.maxtempC}°` : `${currForecastObj.day.maxtempF}°`;
+  lowestSpanEl.textContent = celcius ? `${currForecastObj.day.mintempC}°` : `${currForecastObj.day.mintempF}°`;
 }
 
-export function renderCurrWeatherHourData(forecastData) {
+export function renderCurrWeatherHourData(forecastData, celcius = true) {
   const hourInfoNodeList = document.querySelectorAll('.hour__info__container');
   const hourInfoElArray = Array.from(hourInfoNodeList);
 
@@ -43,7 +44,7 @@ export function renderCurrWeatherHourData(forecastData) {
     hour.style.fontWeight = startHour === new Date().getHours() ? 'bold' : 'normal';
     percentage.textContent = `${currForecastObjHour.chanceOfRain}%`;
     hour__img.src = currForecastObjHour.condition.icon;
-    temperature.textContent = currForecastObjHour.tempC;
+    temperature.textContent = celcius ? `${currForecastObjHour.tempC}°` : `${currForecastObjHour.tempF}°`;
 
 
     if (startHour < 24) startHour++;
@@ -58,7 +59,7 @@ export function renderCurrWeatherHourData(forecastData) {
   }
 }
 
-export function renderHighestLowestInfo(forecastData) {
+export function renderHighestLowestInfo(forecastData, celcius = true) {
   const highestLowestInfoSummarySpan = document.querySelector('.highest__lowest__info__summary');
   const highestInfoSpan = document.querySelector('.highest__info');
   const lowestInfoSpan = document.querySelector('.lowest__info');
@@ -67,11 +68,11 @@ export function renderHighestLowestInfo(forecastData) {
   const currForecastObj = findCurrForecastObj(forecastArr);
 
   highestLowestInfoSummarySpan.textContent = currForecastObj.day.condition.text;
-  highestInfoSpan.textContent = currForecastObj.day.maxtempC;
-  lowestInfoSpan.textContent = currForecastObj.day.mintempC;
+  highestInfoSpan.textContent = celcius ? `${currForecastObj.day.maxtempC}°` : `${currForecastObj.day.maxtempF}°`;
+  lowestInfoSpan.textContent = celcius ? `${currForecastObj.day.mintempC}°` : `${currForecastObj.day.mintempF}°`;
 }
 
-export function renderWeatherInfo(forecastData) {
+export function renderWeatherInfo(forecastData, celcius = true) {
   const { forecastArr, currentObj } = forecastData;
   const currForecastObj = findCurrForecastObj(forecastArr);
 
@@ -90,17 +91,16 @@ export function renderWeatherInfo(forecastData) {
   sunsetValueEl.textContent = currForecastObj.astro.sunset;
   chanceOfRainValueEl.textContent = `${currForecastObj.day.dailyChanceOfRain}%`;
   humidityValueEl.textContent = `${currForecastObj.day.avgHumidity}%`;
-  console.log(currForecastObj.day.totalprecipMM)
   precipitation.textContent = `${currForecastObj.day.totalprecipMM} mm`;
   windValueEl.textContent = `${currentObj.windDir.toLowerCase()} ${currentObj.windKph} km/hr`;
-  feelsLikeValue.textContent = `${currentObj.feelsLikeC}°`;
+  feelsLikeValue.textContent = celcius ? `${currentObj.feelsLikeC}°` : `${currentObj.feelsLikeF}°`;
   pressure.textContent = `${currentObj.pressureMb} hPa`;
   visibility.textContent = `${currentObj.visKm} km`;
   uvIndex.textContent = currentObj.uv;
 }
 
-export function renderForecastContainer(forecastData) {
-  const { locationObj, forecastArr, currentObj } = forecastData;
+export function renderForecastContainer(forecastData, celcius = true) {
+  const { forecastArr } = forecastData;
   const remainingForecastArr = findRemainingForecastObj(forecastArr);
 
   console.log(remainingForecastArr);
@@ -121,9 +121,82 @@ export function renderForecastContainer(forecastData) {
     forecastImgEl.src = currForecastObj.day.condition.icon;
     forecastHumidityEl.textContent = `${currForecastObj.day.avgHumidity}%`;
     forecastRainingChanceEl.textContent = `${currForecastObj.day.dailyChanceOfRain}%`;
-    forecastMaxMinTempEl.textContent = `${currForecastObj.day.maxtempC}° ${currForecastObj.day.mintempC}°`
+    forecastMaxMinTempEl.textContent = celcius ? `${currForecastObj.day.maxtempC}° ${currForecastObj.day.mintempC}°` : `${currForecastObj.day.maxtempF}° ${currForecastObj.day.mintempF}°`
   })
-
 }
+
+// Successfully submit value
+export function unsuccessInput(err) {
+  const searchInputEl = document.querySelector('.search__input');
+  searchInputEl.setCustomValidity(err.message);
+  searchInputEl.reportValidity();
+  searchInputEl.classList.add('error');
+}
+
+// Unsuccessfully submit value
+export function successInput() {
+  const searchInputEl = document.querySelector('.search__input');
+  searchInputEl.value = '';
+  searchInputEl.focus();
+  searchInputEl.classList.remove('error');
+}
+
+
+const searchInputEl = document.querySelector('.search__input');
+// When i lose focus
+searchInputEl.addEventListener('blur', (e) => {
+  searchInputEl.classList.remove('error');
+})
+
+// When i type after bad submit
+function debounce(func, delay) {
+  let timer;
+
+  return function (...args) {
+    console.log(...args)
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
+function processInput(e) {
+  // DOM Traversing
+  console.log(e.target)
+  e.target.setCustomValidity('')
+  e.target.classList.remove('error');
+}
+
+const debouncedProcessInput = debounce(processInput, 200);
+
+searchInputEl.addEventListener('input', debouncedProcessInput);
+
+const btnLightEl = document.querySelector('.btn--light');
+btnLightEl.addEventListener('click', function (e) {
+  const celciusSpan = this.querySelector('.celcious');
+  const farenheit = this.querySelector('.farenheit');
+  celciusSpan.classList.toggle('active');
+  farenheit.classList.toggle('active');
+
+  const proccessedForecastData = getProccessedForecastData();
+
+  if (celciusSpan.classList.contains('active')) {
+    renderCurrWeatherSummaryData(proccessedForecastData);
+    renderCurrWeatherHourData(proccessedForecastData);
+    renderHighestLowestInfo(proccessedForecastData);
+    renderWeatherInfo(proccessedForecastData);
+    renderForecastContainer(proccessedForecastData)
+  } else {
+    renderCurrWeatherSummaryData(proccessedForecastData, false);
+    renderCurrWeatherHourData(proccessedForecastData, false);
+    renderHighestLowestInfo(proccessedForecastData, false);
+    renderWeatherInfo(proccessedForecastData, false);
+    renderForecastContainer(proccessedForecastData, false)
+  }
+})
+
+
+
 
 
