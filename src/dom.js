@@ -1,5 +1,7 @@
-import { findCurrForecastObj, findRemainingForecastObj, getDayInWeek } from "./helper";
-import { getProccessedForecastData } from './index';
+/* eslint-disable func-names */
+import { findCurrForecastObj, findRemainingForecastObj, getDayInWeek } from './helper';
+// eslint-disable-next-line import/no-cycle
+import getProccessedForecastData from './index';
 
 export function renderCurrWeatherSummaryData(forecastData, celcius = true) {
   const locationNameEl = document.querySelector('.location__name');
@@ -14,7 +16,6 @@ export function renderCurrWeatherSummaryData(forecastData, celcius = true) {
   locationNameEl.textContent = locationObj.name;
   summaryEl.textContent = currentObj.condition.text;
   currTemperatureEl.textContent = celcius ? `${currentObj.tempC}°` : `${currentObj.tempF}°`;
-  console.log(currForecastObj);
   highestSpanEl.textContent = celcius ? `${currForecastObj.day.maxtempC}°` : `${currForecastObj.day.maxtempF}°`;
   lowestSpanEl.textContent = celcius ? `${currForecastObj.day.mintempC}°` : `${currForecastObj.day.mintempF}°`;
 }
@@ -29,23 +30,22 @@ export function renderCurrWeatherHourData(forecastData, celcius = true) {
   let isIterating = true;
   let hourInfoElId = 0;
   let startHour = new Date().getHours();
-  let endHour = startHour;
+  const endHour = startHour;
 
   while (isIterating) {
     const currForecastObjHour = currForecastObj.hour[startHour];
     const hourInfoEl = hourInfoElArray[hourInfoElId];
 
-    const hour = hourInfoEl.querySelector(`.hour`);
+    const hour = hourInfoEl.querySelector('.hour');
     const percentage = hourInfoEl.querySelector('.percentage');
-    const hour__img = hourInfoEl.querySelector('.hour__img');
+    const hourImg = hourInfoEl.querySelector('.hour__img');
     const temperature = hourInfoEl.querySelector('.temperature');
 
     hour.textContent = startHour === new Date().getHours() ? 'Now' : String(currForecastObjHour.hour).padStart(2, '0');
     hour.style.fontWeight = startHour === new Date().getHours() ? 'bold' : 'normal';
     percentage.textContent = `${currForecastObjHour.chanceOfRain}%`;
-    hour__img.src = currForecastObjHour.condition.icon;
+    hourImg.src = currForecastObjHour.condition.icon;
     temperature.textContent = celcius ? `${currForecastObjHour.tempC}°` : `${currForecastObjHour.tempF}°`;
-
 
     if (startHour < 24) startHour++;
     if (startHour === 24) startHour = 0;
@@ -55,7 +55,6 @@ export function renderCurrWeatherHourData(forecastData, celcius = true) {
     }
 
     hourInfoElId++;
-
   }
 }
 
@@ -103,10 +102,8 @@ export function renderForecastContainer(forecastData, celcius = true) {
   const { forecastArr } = forecastData;
   const remainingForecastArr = findRemainingForecastObj(forecastArr);
 
-  console.log(remainingForecastArr);
   const forecastContainerRowNodeList = document.querySelectorAll('.forecast__container__row--data');
   const forecastContainerRowArray = Array.from(forecastContainerRowNodeList);
-  console.log(forecastContainerRowArray)
 
   forecastContainerRowArray.forEach((forecastContainerRowEl, index) => {
     const currForecastObj = remainingForecastArr[index];
@@ -121,8 +118,8 @@ export function renderForecastContainer(forecastData, celcius = true) {
     forecastImgEl.src = currForecastObj.day.condition.icon;
     forecastHumidityEl.textContent = `${currForecastObj.day.avgHumidity}%`;
     forecastRainingChanceEl.textContent = `${currForecastObj.day.dailyChanceOfRain}%`;
-    forecastMaxMinTempEl.textContent = celcius ? `${currForecastObj.day.maxtempC}° ${currForecastObj.day.mintempC}°` : `${currForecastObj.day.maxtempF}° ${currForecastObj.day.mintempF}°`
-  })
+    forecastMaxMinTempEl.textContent = celcius ? `${currForecastObj.day.maxtempC}° ${currForecastObj.day.mintempC}°` : `${currForecastObj.day.maxtempF}° ${currForecastObj.day.mintempF}°`;
+  });
 }
 
 // Successfully submit value
@@ -141,19 +138,18 @@ export function successInput() {
   searchInputEl.classList.remove('error');
 }
 
-
 const searchInputEl = document.querySelector('.search__input');
 // When i lose focus
-searchInputEl.addEventListener('blur', (e) => {
+searchInputEl.addEventListener('blur', () => {
   searchInputEl.classList.remove('error');
-})
+});
 
 // When i type after bad submit
 function debounce(func, delay) {
   let timer;
 
+  // eslint-disable-next-line func-names
   return function (...args) {
-    console.log(...args)
     clearTimeout(timer);
     timer = setTimeout(() => {
       func.apply(this, args);
@@ -163,8 +159,7 @@ function debounce(func, delay) {
 
 function processInput(e) {
   // DOM Traversing
-  console.log(e.target)
-  e.target.setCustomValidity('')
+  e.target.setCustomValidity('');
   e.target.classList.remove('error');
 }
 
@@ -173,30 +168,26 @@ const debouncedProcessInput = debounce(processInput, 200);
 searchInputEl.addEventListener('input', debouncedProcessInput);
 
 const btnLightEl = document.querySelector('.btn--light');
-btnLightEl.addEventListener('click', function (e) {
+btnLightEl.addEventListener('click', function () {
   const celciusSpan = this.querySelector('.celcious');
   const farenheit = this.querySelector('.farenheit');
+
   celciusSpan.classList.toggle('active');
   farenheit.classList.toggle('active');
 
   const proccessedForecastData = getProccessedForecastData();
 
   if (celciusSpan.classList.contains('active')) {
-    renderCurrWeatherSummaryData(proccessedForecastData);
-    renderCurrWeatherHourData(proccessedForecastData);
-    renderHighestLowestInfo(proccessedForecastData);
-    renderWeatherInfo(proccessedForecastData);
-    renderForecastContainer(proccessedForecastData)
+    toggleCelciousFarenheitBtn(proccessedForecastData, true);
   } else {
-    renderCurrWeatherSummaryData(proccessedForecastData, false);
-    renderCurrWeatherHourData(proccessedForecastData, false);
-    renderHighestLowestInfo(proccessedForecastData, false);
-    renderWeatherInfo(proccessedForecastData, false);
-    renderForecastContainer(proccessedForecastData, false)
+    toggleCelciousFarenheitBtn(proccessedForecastData, false);
   }
-})
+});
 
-
-
-
-
+function toggleCelciousFarenheitBtn(proccessedForecastData, celcius) {
+  renderCurrWeatherSummaryData(proccessedForecastData, celcius);
+  renderCurrWeatherHourData(proccessedForecastData, celcius);
+  renderHighestLowestInfo(proccessedForecastData, celcius);
+  renderWeatherInfo(proccessedForecastData, celcius);
+  renderForecastContainer(proccessedForecastData, celcius);
+}

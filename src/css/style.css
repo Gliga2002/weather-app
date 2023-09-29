@@ -145,8 +145,6 @@ header {
   background-color: var(--background-color--4);
 }
 
-.info__weather__container {}
-
 .info__weather__cell {
   color: var(--text-color--1);
   padding: 1.2rem 2rem 1.2rem 0.8rem;
@@ -167,8 +165,6 @@ header {
 .forecast {
   padding: 0.5rem 0 3rem 0;
 }
-
-.forecast__container {}
 
 .forecast__container__row {
   color: var(--text-color--1);
