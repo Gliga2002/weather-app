@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <!-- <script defer src="main.js"></script> -->
+</head>
+
+<body>
+  <header>
+    <div class="header__left">
+      <img class='logo__img' src="./assets/logo_white_cropped.png" alt="openweather logo" />
+      <form class="search__form" novalidate>
+        <input class="search__input" name="search" type="text" placeholder="Enter text" spellcheck="false">
+        <button class="btn btn--search" type="submit">Search</button>
+      </form>
+    </div>
+    <div class="header__right">
+      <button class="btn btn--light" type="button">
+        <span class="celcious active">°C</span>
+        /
+        <span class="farenheit">°F</span>
+      </button>
+    </div>
+  </header>
+  <main>
+    <section class="section__hero">
+      <div class="curr__weather">
+        <div class="curr__weather--1 flex flex--center">
+          <div class="general__info">
+            <h2 class="location__name heading heading--secondary"></h2>
+            <h4 class="summary heading heading--tertiary"></h4>
+            <h1 class="curr__temperature heading heading--primary "></h1>
+            <div class="highest__lowest flex">
+              <p class="highest">H: <span></span></p>
+              <p class="lowest">L: <span></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="curr__weather--2">
+          <div class="hour__info flex">
+            <div class="hour__info__container flex flex--column gap--es" data-id="0">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="1">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="2">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="3">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="4">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="5">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="6">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="7">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="8">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="9">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="10">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="11">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="12">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="13">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="14">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="15">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="16">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="17">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="18">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="19">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="20">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="21">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="22">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+
+            <div class="hour__info__container flex flex--column gap--es" data-id="23">
+              <p class="hour"></p>
+              <p class="percentage"></p>
+              <figure class="margin-bottom--sm">
+                <img class="hour__img" src="" alt="weather-img">
+              </figure>
+              <p class="temperature"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="highest__lowest__info">
+        <p>Today: <span class="highest__lowest__info__summary"></span>. The high will be <span
+            class="highest__info">22°</span>.The low tonight will be <span class="lowest__info"></span>.</p>
+      </div>
+
+      <div class="info__weather">
+        <div class="info__weather__container container grid grid--5-cols gap--md">
+
+          <div class="info__weather__cell flex flex--column flex--center">
+            <small class="info__weather__title margin-bottom--es">Sunrise</small>
+            <h5 class=" info__weather__value sunrise__value"></h5>
+          </div>
+
+          <div class="info__weather__cell flex flex--column flex--center">
+            <small class="info__weather__title margin-bottom--es">Sunset</small>
+            <h5 class="info__weather__value sunset__value"></h5>
+          </div>
+
+          <div class="info__weather__cell flex flex--column flex--center">
+            <small class="info__weather__title margin-bottom--es">Chance of Rain</small>
+            <h5 class="info__weather__value chance__of__rain__value"></h5>
+          </div>
+
+
+          <div class="info__weather__cell flex flex--column flex--center">
+            <small class="info__weather__title margin-bottom--es">Humidity</small>
+            <h5 class="info__weather__value humidity__value"></h5>
+          </div>
+
+          <div class="info__weather__cell flex flex--column flex--center">
+            <small class="info__weather__title margin-bottom--es">Wind</small>
+            <h5 class="info__weather__value wind__value"></h5>
+          </div>
+
+          <div class="info__weather__cell flex flex--column flex--center">
+            <small class="info__weather__title margin-bottom--es">Feels like</small>
+            <h5 class="info__weather__value feels__like__value"></h5>
+          </div>
+
+          <div class="info__weather__cell flex flex--column flex--center">
+            <small class="info__weather__title margin-bottom--es">Precipitation</small>
+            <h5 class="info__weather__value precipitation__value"></h5>
+          </div>
+
+          <div class="info__weather__cell flex flex--column flex--center">
+            <small class="info__weather__title margin-bottom--es">Pressure</small>
+            <h5 class="info__weather__value pressure__value"></h5>
+          </div>
+
+          <div class="info__weather__cell flex flex--column flex--center">
+            <small class="info__weather__title margin-bottom--es">Visibility</small>
+            <h5 class="info__weather__value visibility__value"></h5>
+          </div>
+
+          <div class="info__weather__cell flex flex--column flex--center">
+            <small class="info__weather__title margin-bottom--es">UV index</small>
+            <h5 class="info__weather__value uv__index__value"></h5>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="forecast">
+      <div class="forecast__container container flex flex--column">
+
+        <div class="forecast__container__row grid grid--5-cols">
+          <p class="forecast__day forecast__day--title">Day</p>
+          <figure class="forecast__img logo__img">
+          </figure>
+          <p class="forecast__raining__chance forecast__raining__chance--title ">Chance of rain</p>
+          <p class="forecast__humidity forecast__humidity--title ">Humidity</p>
+          <p class="forecast__temperature forecast__temperature--title">Temperature</p>
+        </div>
+
+        <div class="forecast__container__row forecast__container__row--data grid grid--5-cols">
+          <p class="forecast__day forecast__day--value"></p>
+          <figure class="forecast__img">
+            <img class=" logo__img" src="" alt="cloud image">
+          </figure>
+          <p class="forecast__raining__chance forecast__raining__chance--value"></p>
+          <p class="forecast__humidity forecast__humidity--value"></p>
+          <p class="forecast__temperature forecast__temperature--value"></p>
+        </div>
+
+        <div class="forecast__container__row forecast__container__row--data grid grid--5-cols">
+          <p class="forecast__day forecast__day--value"></p>
+          <figure class="forecast__img">
+            <img class=" logo__img" src="" alt="cloud image">
+          </figure>
+          <p class="forecast__raining__chance forecast__raining__chance--value"></p>
+          <p class="forecast__humidity forecast__humidity--value"></p>
+          <p class="forecast__temperature forecast__temperature--value"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
